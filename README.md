@@ -1,5 +1,7 @@
 [![Shared Release CI](https://github.com/VaultSovereign/Vm-umbrella/actions/workflows/shared-release.yml/badge.svg)](https://github.com/VaultSovereign/Vm-umbrella/actions/workflows/shared-release.yml)
 
+**Current CI Baseline:** `v0.1.0` — Rubedo Phase
+
 # vm-umbrella — VaultMesh Master Umbrella
 
 This repo is a pure coordinator. It pins canonical leaf projects as submodules under a single workspace.
