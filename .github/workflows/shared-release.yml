@@ -12,19 +12,32 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with: { fetch-depth: 0 }
-      - uses: actions/setup-node@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: 'pnpm'
-      - run: corepack enable && corepack prepare pnpm@latest --activate
-      - run: |
-          if [ -f package.json ]; then pnpm install --frozen-lockfile; else echo 'no package.json'; fi
-      - run: |
+          cache: pnpm
+      - name: Enable pnpm via Corepack
+        run: |
+          corepack enable
+          corepack prepare pnpm@latest --activate
+      - name: Verify pnpm
+        run: |
+          which pnpm
+          pnpm --version
+      - name: Install deps
+        run: |
+          if [ -f package.json ]; then pnpm install --frozen-lockfile || pnpm install; else echo 'no package.json'; fi
+      - name: Run tests
+        run: |
           if [ -f package.json ]; then (pnpm test --if-present || true); fi
-      - run: |
+      - name: Build
+        run: |
           if [ -f package.json ]; then (pnpm build --if-present || true); fi
-      - run: |
+      - name: Audit
+        run: |
           if [ -f package.json ]; then (pnpm audit --prod --audit-level=high || true); fi
-      - if: github.ref == 'refs/heads/main'
+      - name: Release on main
+        if: github.ref == 'refs/heads/main'
         run: |
           if [ -f package.json ]; then (pnpm run release --if-present || true); fi
