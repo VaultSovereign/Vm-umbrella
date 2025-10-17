@@ -18,3 +18,13 @@ repos:
       - id: black
         language_version: python3
 
+  - repo: local
+    hooks:
+      - id: forbid-legacy-slugs
+        name: forbid legacy slugs
+        # exit non-zero if any match is found
+        entry: bash -lc "rg -n '(vaultmesh-mesh|infra-servers|infra-dns|(^|/)forge(/|$)|(^|/)ops(/|$)|(^|/)cmd(/|$))' \
+                         --glob '!**/logs/**' --glob '!**/.git/**' --glob '!**/node_modules/**' \
+                         --glob '!**/vendor/**' --glob '!**/target/**' && exit 1 || exit 0"
+        language: system
+        pass_filenames: false
