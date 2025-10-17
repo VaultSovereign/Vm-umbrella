@@ -13,15 +13,24 @@ jobs:
       - uses: actions/checkout@v4
         with: { fetch-depth: 0 }
       - name: Enable pnpm via Corepack
+        if: ${{ hashFiles('package.json') != '' }}
         run: |
           corepack enable
           corepack prepare pnpm@latest --activate
-      - name: Setup Node
+      - name: Setup Node (with pnpm cache)
+        if: ${{ hashFiles('package.json') != '' && hashFiles('pnpm-lock.yaml') != '' }}
         uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: pnpm
+          cache-dependency-path: pnpm-lock.yaml
+      - name: Setup Node
+        if: ${{ hashFiles('package.json') != '' && hashFiles('pnpm-lock.yaml') == '' }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
       - name: Verify pnpm
+        if: ${{ hashFiles('package.json') != '' }}
         run: |
           which pnpm
           pnpm --version
