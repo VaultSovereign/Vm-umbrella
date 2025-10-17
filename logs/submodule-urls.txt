@@ -1,0 +1,21 @@
+Entering 'vm-cmd'
+origin	git@github.com:VaultSovereign/vm-cmd.git (fetch)
+origin	git@github.com:VaultSovereign/vm-cmd.git (push)
+Entering 'vm-forge'
+origin	git@github.com:VaultSovereign/vm-forge.git (fetch)
+origin	git@github.com:VaultSovereign/vm-forge.git (push)
+Entering 'vm-infra-dns'
+origin	git@github.com:VaultSovereign/vm-infra-dns.git (fetch)
+origin	git@github.com:VaultSovereign/vm-infra-dns.git (push)
+Entering 'vm-infra-srv'
+origin	git@github.com:VaultSovereign/vm-infra-srv.git (fetch)
+origin	git@github.com:VaultSovereign/vm-infra-srv.git (push)
+Entering 'vm-mesh'
+origin	git@github.com:VaultSovereign/vm-mesh.git (fetch)
+origin	git@github.com:VaultSovereign/vm-mesh.git (push)
+Entering 'vm-meta'
+origin	git@github.com:VaultSovereign/meta.git (fetch)
+origin	git@github.com:VaultSovereign/meta.git (push)
+Entering 'vm-ops'
+origin	git@github.com:VaultSovereign/ops.git (fetch)
+origin	git@github.com:VaultSovereign/ops.git (push)
