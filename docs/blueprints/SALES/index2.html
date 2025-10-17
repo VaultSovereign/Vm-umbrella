@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>VaultMesh Demo — TPRM Sample</title>
+  <style>
+    body{font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;margin:24px;max-width:960px}
+    pre{background:#0b1220;color:#cbd5e1;padding:12px;border-radius:8px;overflow:auto}
+    code{font-family:ui-monospace,Menlo,monospace}
+    a{color:#0ea5e9}
+    h1,h2{color:#0f172a}
+    .grid{display:grid;gap:16px}
+    .card{border:1px solid #e5e7eb;border-radius:12px;padding:16px}
+  </style>
+</head>
+<body>
+  <h1>VaultMesh Demo — TPRM Sample</h1>
+  <p>This page hosts a <strong>sample TPRM report</strong> and runnable example args for local smoke tests.</p>
+
+  <div class="grid">
+    <div class="card">
+      <h2>🔎 Sample Output — <code>tprm_report.sample.json</code></h2>
+      <p>Generated structure aligned to <code>docs/tprm.v1.yaml#/output_schema</code>.</p>
+      <pre><code id="sample-json">(loading...)</code></pre>
+    </div>
+
+    <div class="card">
+      <h2>▶ Run Locally (Simulator)</h2>
+      <ol>
+        <li><code>npm run workbench:build</code></li>
+        <li><code>npm run workbench:start &amp; PID=$!; sleep 2</code></li>
+        <li>Open SSE preview:<br>
+          <code>curl -fsSN --max-time 8 "http://localhost:8787/v1/api/execute/stream?templateId=demo.echo&amp;args=%7B%22message%22%3A%22hi%22%7D"</code>
+        </li>
+        <li>Run TPRM (CLI):<br>
+          <code>vm run dora.tprm.v1 --args @examples/inputs/tprm.acme.json | jq '.result.acceptance'</code>
+        </li>
+        <li><code>kill $PID</code></li>
+      </ol>
+      <p>See also <code>ARTIFACTS.md</code> for CI artifacts and review guidance.</p>
+    </div>
+  </div>
+
+  <script>
+    fetch('./tprm_report.sample.json').then(r=>r.json()).then(j=>{
+      document.getElementById('sample-json').textContent = JSON.stringify(j,null,2);
+    }).catch(()=>{document.getElementById('sample-json').textContent='(sample not found)';});
+  </script>
+</body>
+</html>

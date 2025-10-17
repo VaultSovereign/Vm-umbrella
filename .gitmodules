@@ -1,0 +1,21 @@
+[submodule "vm-mesh"]
+	path = vm-mesh
+	url = git@github.com:VaultSovereign/vaultmesh-mesh.git
+[submodule "vm-forge"]
+	path = vm-forge
+	url = git@github.com:VaultSovereign/forge.git
+[submodule "vm-ops"]
+	path = vm-ops
+	url = git@github.com:VaultSovereign/ops.git
+[submodule "vm-infra-dns"]
+	path = vm-infra-dns
+	url = git@github.com:VaultSovereign/infra-dns.git
+[submodule "vm-infra-srv"]
+	path = vm-infra-srv
+	url = git@github.com:VaultSovereign/infra-servers.git
+[submodule "vm-meta"]
+	path = vm-meta
+	url = git@github.com:VaultSovereign/meta.git
+[submodule "vm-cmd"]
+	path = vm-cmd
+	url = git@github.com:VaultSovereign/cmd.git

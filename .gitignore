@@ -1,0 +1,26 @@
+# node / pnpm
+node_modules/
+pnpm-lock.yaml
+
+# python
+.venv/
+__pycache__/
+
+# rust
+/target/
+
+# system
+.DS_Store
+.idea/
+.vscode/
+
+# logs / caches
+*.log
+.cache/
+
+# receipts/artifacts (attach to Releases if needed)
+*.zip
+*.tar
+*.tar.gz
+*.tgz
+

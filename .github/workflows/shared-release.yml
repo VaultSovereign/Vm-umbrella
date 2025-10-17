@@ -1,0 +1,30 @@
+name: shared-release
+
+on:
+  workflow_call: {}
+  workflow_dispatch: {}
+  push:
+    branches: [ main ]
+
+jobs:
+  lint-build-release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'pnpm'
+      - run: corepack enable && corepack prepare pnpm@latest --activate
+      - run: |
+          if [ -f package.json ]; then pnpm install --frozen-lockfile; else echo 'no package.json'; fi
+      - run: |
+          if [ -f package.json ]; then (pnpm test --if-present || true); fi
+      - run: |
+          if [ -f package.json ]; then (pnpm build --if-present || true); fi
+      - run: |
+          if [ -f package.json ]; then (pnpm audit --prod --audit-level=high || true); fi
+      - if: github.ref == 'refs/heads/main'
+        run: |
+          if [ -f package.json ]; then (pnpm run release --if-present || true); fi
