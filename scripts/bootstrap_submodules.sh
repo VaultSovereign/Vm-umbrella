@@ -70,3 +70,4 @@ git submodule sync --recursive || true
 git submodule update --init --recursive || true
 
 echo "• done"
+echo "[vm] Lattice bootstrap complete — run: make gh-wire-all ORG=VaultSovereign"

@@ -5,8 +5,17 @@ on: [push, pull_request]
 jobs:
   links:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        path:
+          - .
+          - vm-forge
+          - vm-ops
+          - vm-meta
     steps:
       - uses: actions/checkout@v4
+        with:
+          submodules: recursive
       - uses: lycheeverse/lychee-action@v2
         with:
           args: >-
@@ -15,4 +24,4 @@ jobs:
             --accept 200,203,206,302,307,308
             --exclude 'https://img.shields.io/'
             --exclude 'https://raw.githubusercontent.com/'
-            .
+            ${{ matrix.path }}
