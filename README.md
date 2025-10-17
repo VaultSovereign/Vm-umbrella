@@ -1,4 +1,4 @@
-[![Shared Release CI](https://github.com/VaultSovereign/Vm-umbrella/actions/workflows/shared-release.yml/badge.svg)](https://github.com/VaultSovereign/Vm-umbrella/actions/workflows/shared-release.yml)
+[![Shared Release CI](https://github.com/VaultSovereign/vm-umbrella/actions/workflows/shared-release.yml/badge.svg)](https://github.com/VaultSovereign/vm-umbrella/actions/workflows/shared-release.yml)
 
 **Current CI Baseline:** `v0.1.0` — Rubedo Phase
 
@@ -9,13 +9,13 @@ This repo is a pure coordinator. It pins canonical leaf projects as submodules u
 Why vm-? Neutral naming, clean convergence for multiple families without “old” labels or history rewrites.
 
 ## Repos (canonical leafs)
-- Mesh (Rust core) → vaultmesh-mesh (or VaultMesh; switchable)
-- Forge (TypeScript workbench) → forge
-- Ops (prompts/guardrails/MCP tools) → ops
-- Infra DNS → infra-dns
-- Infra Servers → infra-servers
-- Meta (publishing) → meta
-- Shared CLI utils → cmd
+- Mesh (Rust core) → vm-mesh
+- Forge (TypeScript workbench) → vm-forge
+- Ops (prompts/guardrails/MCP tools) → vm-ops
+- Infra DNS → vm-infra-dns
+- Infra Servers → vm-infra-srv
+- Meta (publishing) → vm-meta
+- Shared CLI utils → vm-cmd
 
 ## Quick start
 ```bash
@@ -55,9 +55,9 @@ Examples:
   make gh:push-umbrella ORG=VaultSovereign REPO=vm-umbrella
 
 - Wire a leaf project to reuse the umbrella workflow:
-  make gh:wire-leaf ORG=VaultSovereign LEAF=forge UMBRELLA=vm-umbrella BRANCH=main
+  make gh:wire-leaf ORG=VaultSovereign LEAF=vm-forge UMBRELLA=vm-umbrella BRANCH=main
 
-- Wire common leaves (forge, ops, mesh, infra, meta):
+- Wire common leaves (vm-forge, vm-ops, vm-mesh, vm-infra-dns, vm-infra-srv, vm-meta):
   make gh:wire-all ORG=VaultSovereign UMBRELLA=vm-umbrella BRANCH=main
 
 - (Org admins) Set org-wide Actions defaults:

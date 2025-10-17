@@ -1,0 +1,17 @@
+name: Linkcheck
+
+on: [push, pull_request]
+
+jobs:
+  links:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: lycheeverse/lychee-action@v2
+        with:
+          args: >-
+            --no-progress --verbose
+            --exclude-path vm-umbrella/logs
+            --accept 200,203,206,302,307,308
+            --exclude 'https://img.shields.io/'
+            .

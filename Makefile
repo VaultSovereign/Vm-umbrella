@@ -41,7 +41,7 @@ gh-configure-umbrella:
 	@[ -n "$(REPO)" ] || { echo "REPO required" >&2; exit 2; }
 	@bash scripts/gh_configure_repo.sh "$(ORG)" "$(REPO)"
 
-# Usage: make gh-wire-leaf ORG=VaultSovereign LEAF=forge UMBRELLA=vm-umbrella BRANCH=main
+# Usage: make gh-wire-leaf ORG=VaultSovereign LEAF=vm-forge UMBRELLA=vm-umbrella BRANCH=main
 gh-wire-leaf:
 	@[ -n "$$GITHUB_TOKEN" ] || { echo "GITHUB_TOKEN is required" >&2; exit 2; }
 	@[ -n "$(ORG)" ] || { echo "ORG required" >&2; exit 2; }
@@ -50,12 +50,12 @@ gh-wire-leaf:
 
 # Wire common leaves quickly
 gh-wire-all:
-	@$(MAKE) gh-wire-leaf ORG=$(ORG) LEAF=forge UMBRELLA=$(if $(UMBRELLA),$(UMBRELLA),vm-umbrella) BRANCH=$(if $(BRANCH),$(BRANCH),main)
-	@$(MAKE) gh-wire-leaf ORG=$(ORG) LEAF=ops UMBRELLA=$(if $(UMBRELLA),$(UMBRELLA),vm-umbrella) BRANCH=$(if $(BRANCH),$(BRANCH),main)
-	@$(MAKE) gh-wire-leaf ORG=$(ORG) LEAF=vaultmesh-mesh UMBRELLA=$(if $(UMBRELLA),$(UMBRELLA),vm-umbrella) BRANCH=$(if $(BRANCH),$(BRANCH),main)
-	@$(MAKE) gh-wire-leaf ORG=$(ORG) LEAF=infra-dns UMBRELLA=$(if $(UMBRELLA),$(UMBRELLA),vm-umbrella) BRANCH=$(if $(BRANCH),$(BRANCH),main)
-	@$(MAKE) gh-wire-leaf ORG=$(ORG) LEAF=infra-servers UMBRELLA=$(if $(UMBRELLA),$(UMBRELLA),vm-umbrella) BRANCH=$(if $(BRANCH),$(BRANCH),main)
-	@$(MAKE) gh-wire-leaf ORG=$(ORG) LEAF=meta UMBRELLA=$(if $(UMBRELLA),$(UMBRELLA),vm-umbrella) BRANCH=$(if $(BRANCH),$(BRANCH),main)
+	@$(MAKE) gh-wire-leaf ORG=$(ORG) LEAF=vm-forge UMBRELLA=$(if $(UMBRELLA),$(UMBRELLA),vm-umbrella) BRANCH=$(if $(BRANCH),$(BRANCH),main)
+	@$(MAKE) gh-wire-leaf ORG=$(ORG) LEAF=vm-ops UMBRELLA=$(if $(UMBRELLA),$(UMBRELLA),vm-umbrella) BRANCH=$(if $(BRANCH),$(BRANCH),main)
+	@$(MAKE) gh-wire-leaf ORG=$(ORG) LEAF=vm-mesh UMBRELLA=$(if $(UMBRELLA),$(UMBRELLA),vm-umbrella) BRANCH=$(if $(BRANCH),$(BRANCH),main)
+	@$(MAKE) gh-wire-leaf ORG=$(ORG) LEAF=vm-infra-dns UMBRELLA=$(if $(UMBRELLA),$(UMBRELLA),vm-umbrella) BRANCH=$(if $(BRANCH),$(BRANCH),main)
+	@$(MAKE) gh-wire-leaf ORG=$(ORG) LEAF=vm-infra-srv UMBRELLA=$(if $(UMBRELLA),$(UMBRELLA),vm-umbrella) BRANCH=$(if $(BRANCH),$(BRANCH),main)
+	@$(MAKE) gh-wire-leaf ORG=$(ORG) LEAF=vm-meta UMBRELLA=$(if $(UMBRELLA),$(UMBRELLA),vm-umbrella) BRANCH=$(if $(BRANCH),$(BRANCH),main)
 
 # Usage: make gh-push-umbrella ORG=VaultSovereign REPO=vm-umbrella
 gh-push-umbrella:
@@ -66,10 +66,85 @@ gh-push-umbrella:
 	@git remote get-url origin >/dev/null 2>&1 || git remote add origin git@github.com:$(ORG)/$(REPO).git
 	@git push -u origin main
 
+.PHONY: prune-branches prune-branches-dry-run
+# Prune merged branches across the constellation (with backup tags)
+prune-branches:
+	@for r in vm-forge vm-ops vm-mesh vm-infra-dns vm-infra-srv vm-meta vm-umbrella; do \
+	  echo "== Pruning $$r (with backup tags)…"; \
+	  bash scripts/gh_prune_merged_branches.sh --repo VaultSovereign/$$r --backup; \
+	  echo; \
+	done
+
+# Preview deletion candidates without changes
+prune-branches-dry-run:
+	@for r in vm-forge vm-ops vm-mesh vm-infra-dns vm-infra-srv vm-meta vm-umbrella; do \
+	  echo "== Preview $$r (dry-run)…"; \
+	  bash scripts/gh_prune_merged_branches.sh --repo VaultSovereign/$$r --dry-run; \
+	  echo; \
+	done
+
 .PHONY: ci-status
 ci-status:
-	@for repo in forge ops vaultmesh-mesh infra-dns infra-servers meta; do \
+	@for repo in vm-forge vm-ops vm-mesh vm-infra-dns vm-infra-srv vm-meta; do \
 	  echo "== $$repo =="; \
 	  gh run list -R VaultSovereign/$$repo -L 1 --json status,name,conclusion,url || true; \
 	  echo; \
 	done
+
+# --- Remote auditing + rewrite to SSH host alias ---
+.PHONY: remotes-audit fix-remotes ssh-config-ensure
+
+# Default SSH host alias (as in ~/.ssh/config)
+HOST_ALIAS ?= github.com-vault
+IDENTITY ?= $(HOME)/.ssh/id_rsa_vaultsovereign
+
+remotes-audit:
+	@echo "• auditing remotes in umbrella and leaves";
+	@for d in . vm-*; do \
+	  if [ -e "$$d/.git" ]; then \
+	    echo "== $$d =="; \
+	    git -C "$$d" remote -v || true; \
+	    echo; \
+	  fi; \
+	done
+
+fix-remotes:
+	@echo "• rewriting remotes to use SSH host alias: $(HOST_ALIAS)";
+	@for d in . vm-*; do \
+	  if [ -e "$$d/.git" ]; then \
+	    cur=$$(git -C "$$d" remote get-url origin 2>/dev/null || true); \
+	    if [ -z "$$cur" ]; then echo "(skip $$d: no origin)"; continue; fi; \
+	    new=""; \
+	    if [[ "$$cur" =~ ^git@([^:]+):(.*)$$ ]]; then \
+	      new="git@$(HOST_ALIAS):$${BASH_REMATCH[2]}"; \
+	    elif [[ "$$cur" =~ ^ssh://git@([^/]+)/(.+)$$ ]]; then \
+	      new="ssh://git@$(HOST_ALIAS)/$${BASH_REMATCH[2]}"; \
+	    elif [[ "$$cur" =~ ^https://github.com/(.+)$$ ]]; then \
+	      new="git@$(HOST_ALIAS):$${BASH_REMATCH[1]}"; \
+	    fi; \
+	    if [ -n "$$new" ] && [ "$$new" != "$$cur" ]; then \
+	      echo "== $$d =="; \
+	      echo "  $$cur"; \
+	      echo "→ $$new"; \
+	      git -C "$$d" remote set-url origin "$$new"; \
+	    else \
+	      echo "(ok $$d: no change)"; \
+	    fi; \
+	  fi; \
+	done
+
+ssh-config-ensure:
+	@mkdir -p $(HOME)/.ssh && chmod 700 $(HOME)/.ssh
+	@touch $(HOME)/.ssh/config && chmod 600 $(HOME)/.ssh/config
+	@if ! grep -q '^Host $(HOST_ALIAS)$$' $(HOME)/.ssh/config; then \
+	  echo "Adding Host $(HOST_ALIAS) to ~/.ssh/config"; \
+	  { \
+	    echo 'Host $(HOST_ALIAS)'; \
+	    echo '  HostName github.com'; \
+	    echo '  User git'; \
+	    echo '  IdentityFile $(IDENTITY)'; \
+	    echo '  IdentitiesOnly yes'; \
+	  } >> $(HOME)/.ssh/config; \
+	else \
+	  echo "Host $(HOST_ALIAS) already present in ~/.ssh/config"; \
+	fi
