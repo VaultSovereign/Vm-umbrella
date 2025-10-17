@@ -1,0 +1,91 @@
+name: shared-docs
+
+on:
+  workflow_call: {}
+  workflow_dispatch: {}
+  push:
+    branches: [ main ]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Build docs
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'pnpm'
+        continue-on-error: true
+
+      - name: Enable pnpm
+        run: |
+          corepack enable
+          corepack prepare pnpm@latest --activate
+        continue-on-error: true
+
+      - name: Install JS deps (if package.json exists)
+        run: |
+          if [ -f package.json ]; then
+            pnpm install --frozen-lockfile || pnpm install
+          else
+            echo "No package.json; skipping pnpm install."
+          fi
+        continue-on-error: true
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+        continue-on-error: true
+
+      - name: Build documentation
+        id: build
+        shell: bash
+        run: |
+          set -e
+          OUT_DIR="docs"
+          if [ -f mkdocs.yml ]; then
+            python -m pip install --upgrade pip || true
+            pip install mkdocs mkdocs-material || true
+            mkdocs build -d site
+            OUT_DIR="site"
+          elif [ -f docusaurus.config.js ] || [ -f docusaurus.config.ts ]; then
+            (pnpm build || (npm ci && npm run build)) || true
+            OUT_DIR="build"
+          elif [ -d docs ]; then
+            echo "Using docs/ as artifact content"
+          else
+            mkdir -p docs
+            echo "<html><body><h1>Docs</h1><p>No docs found.</p></body></html>" > docs/index.html
+          fi
+          echo "out_dir=$OUT_DIR" >> "$GITHUB_OUTPUT"
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ${{ steps.build.outputs.out_dir }}
+
+  deploy:
+    name: Deploy to Pages
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+
