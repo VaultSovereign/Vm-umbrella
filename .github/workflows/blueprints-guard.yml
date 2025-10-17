@@ -1,0 +1,28 @@
+name: Blueprints Guard
+
+# Ensures only GTM/legal docs remain in docs/blueprints/
+on: [push, pull_request]
+
+jobs:
+  guard:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Enforce GTM/legal allowlist
+        run: |
+          set -e
+          if [ ! -d docs/blueprints ]; then
+            echo "No docs/blueprints directory found, skipping."
+            exit 0
+          fi
+
+          echo "Checking docs/blueprints/ allowlist..."
+          ALLOWED="^(PRIVACY\.md|TOS\.md|SUPPORT\.md|FINTECH_PRICING\.md|SALES/|INDEX\.md)$"
+          cd docs/blueprints
+          BAD=$(ls -1A | grep -Ev "$ALLOWED" || true)
+          if [ -n "$BAD" ]; then
+            echo "::error::Unexpected files in docs/blueprints:"
+            echo "$BAD"
+            exit 1
+          fi
