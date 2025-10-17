@@ -1,3 +1,5 @@
+[![Shared Release CI](https://github.com/VaultSovereign/Vm-umbrella/actions/workflows/shared-release.yml/badge.svg)](https://github.com/VaultSovereign/Vm-umbrella/actions/workflows/shared-release.yml)
+
 # vm-umbrella — VaultMesh Master Umbrella
 
 This repo is a pure coordinator. It pins canonical leaf projects as submodules under a single workspace.
@@ -30,6 +32,34 @@ make status    # shows submodule SHAs, remotes, toolchains
 - vaultmesh-ai — GTM blueprints & marketing collateral
   Source: https://github.com/VaultSovereign/vaultmesh-ai
   Concepts borrowed: release CI, security checks, one-pager docs.
+
+## Blueprints
+See docs/blueprints/INDEX.md for imported GTM materials.
+
+## API Bootstrap (GitHub)
+Use the provided scripts to create and configure repos via GitHub API.
+
+Requirements: export GITHUB_TOKEN with repo/workflow (and admin:org for org-wide changes).
+
+Examples:
+
+- Create the umbrella repo under your org (public by default):
+  make gh:create-umbrella ORG=VaultSovereign REPO=vm-umbrella VIS=public
+
+- Configure Actions on the umbrella repo (allow all actions, write perms):
+  make gh:configure-umbrella ORG=VaultSovereign REPO=vm-umbrella
+
+- Push this local repo upstream:
+  make gh:push-umbrella ORG=VaultSovereign REPO=vm-umbrella
+
+- Wire a leaf project to reuse the umbrella workflow:
+  make gh:wire-leaf ORG=VaultSovereign LEAF=forge UMBRELLA=vm-umbrella BRANCH=main
+
+- Wire common leaves (forge, ops, mesh, infra, meta):
+  make gh:wire-all ORG=VaultSovereign UMBRELLA=vm-umbrella BRANCH=main
+
+- (Org admins) Set org-wide Actions defaults:
+  bash scripts/gh_configure_org_actions.sh VaultSovereign
 
 ## Related Repos
 - vaultmesh-ai (blueprint + GTM collateral): https://github.com/VaultSovereign/vaultmesh-ai
