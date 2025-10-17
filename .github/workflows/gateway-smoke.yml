@@ -1,0 +1,28 @@
+name: Gateway Smoke
+on: [push, pull_request]
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - uses: dtolnay/rust-toolchain@stable
+      - name: Build vm-mesh
+        working-directory: vm-umbrella/vm-mesh
+        run: cargo build --release
+      - name: Run gateway & probe health
+        working-directory: vm-umbrella/vm-mesh
+        run: |
+          set -euo pipefail
+          ./target/release/vaultmesh gateway --addr 127.0.0.1:8080 &
+          PID=$!
+          for i in {1..40}; do
+            sleep 0.25
+            if curl -fsS http://127.0.0.1:8080/v1/health >/dev/null; then
+              echo "gateway healthy"; break
+            fi
+          done
+          curl -fsS http://127.0.0.1:8080/v1/health | tee /dev/stderr | grep -q '^ok$'
+          kill $PID || true
+          wait $PID || true
