@@ -17,10 +17,10 @@ __pycache__/
 # logs / caches
 *.log
 .cache/
+logs/actions/*.zip
 
 # receipts/artifacts (attach to Releases if needed)
 *.zip
 *.tar
 *.tar.gz
 *.tgz
-

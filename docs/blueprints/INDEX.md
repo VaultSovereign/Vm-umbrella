@@ -1,22 +1,20 @@
-# GTM Blueprints — Index
+# VaultMesh Blueprints — GTM / Legal
 
-Imported from vaultmesh-ai (reference only).
+This folder intentionally contains business-facing documents only:
 
-## Documents
-- [ Product Analytics (Privacy‑first, Pilot)](ANALYTICS.md)
-- [ VaultMesh Architecture](ARCHITECTURE.md)
-- [ VaultMesh AI — GCP Deployment Guide (Workbench + CLI)](DEPLOY_GCP.md)
-- [ VaultMesh FinTech Pricing - Dubai-Ireland Corridor](FINTECH_PRICING.md)
-- [ VaultMesh MCP Integration Guide](MCP_WIRING.md)
-- [ VaultMesh Pilot Runbook - DIFC/Dublin One-Week Readiness](PILOT_RUNBOOK.md)
-- [ Privacy Policy (Pilot)](PRIVACY.md)
-- [ VaultMesh Quickstart Guide](QUICKSTART.md)
-- [ VaultMesh Schema Reference](SCHEMAS.md)
-- [ Support & SLAs (Pilot)](SUPPORT.md)
-- [ Terms of Service (Pilot)](TOS.md)
-- [ VaultMesh Visual Workbench Architecture](WORKBENCH.md)
-
-## Folders
-- DIAGRAMS/
-- DRILLS/
+- PRIVACY.md
+- TOS.md
+- SUPPORT.md
+- FINTECH_PRICING.md
 - SALES/
+
+Technical & implementation documents now live in vm-forge:
+
+- Repo: https://github.com/VaultSovereign/vm-forge
+- Docs: https://github.com/VaultSovereign/vm-forge/tree/main/docs
+
+Historical blueprint content imported from earlier repos has been archived.
+See: ../archive/blueprints-vaultmesh-ai-import/
+
+— Reduce duplication: keep GTM/legal here; evolve engineering docs in vm-forge with code.
+
