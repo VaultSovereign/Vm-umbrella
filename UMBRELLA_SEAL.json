@@ -1,0 +1,137 @@
+{
+  "artifact": "vm-umbrella",
+  "algo": "SHA3-256",
+  "root_sha3_256": "8c072738f7cb6500ba5956b1d23a5e4eb6c1f75d9b3e4fd2ee284d0c0fe219a8",
+  "entries": [
+    {
+      "path": "LICENSE.sovereign",
+      "sha3_256": "645d3578305afd6b1edc381bc3f8a23e6c2b2652a9d5be2ac7427a7043f5abb2"
+    },
+    {
+      "path": "README.md",
+      "sha3_256": "0821c5bd5f9b7ddc43cdae36d3c0a44a53f610b79950ac3795e3c02e91272886"
+    },
+    {
+      "path": "SECURITY.md",
+      "sha3_256": "bd14b49ee86bb4ddd4977ce2894bd4c157aacf42b89e4e020999bbd279c0eb15"
+    },
+    {
+      "path": "docs/ARTIFACTS.md",
+      "sha3_256": "9d5337f945b3f74b17bef8b53c9978fbefcf50cdfe50bcb4b7e45f5780e7aac3"
+    },
+    {
+      "path": "docs/archive/blueprints-vaultmesh-ai-import/ANALYTICS.md",
+      "sha3_256": "8f5d91426298a826bdfc98f83ce9344ce6655aec4d66ad4e519c85949079d872"
+    },
+    {
+      "path": "docs/archive/blueprints-vaultmesh-ai-import/ARCHITECTURE.md",
+      "sha3_256": "358259d131cefebd1f4f05596a8ae2b3e2e621209d51a924b726a19465dd6926"
+    },
+    {
+      "path": "docs/archive/blueprints-vaultmesh-ai-import/DEPLOY_GCP.md",
+      "sha3_256": "64c8d7df9bea133334e7e5bcce6420970e2bf9c3d2d14ac76a6e1e78f8e7c580"
+    },
+    {
+      "path": "docs/archive/blueprints-vaultmesh-ai-import/DIAGRAMS/workbench-architecture.svg",
+      "sha3_256": "81fbdfd09c128ede52af638858f791a1b31b363709c5825773df630f21efff1c"
+    },
+    {
+      "path": "docs/archive/blueprints-vaultmesh-ai-import/DRILLS/FORGE_PREPUSH.md",
+      "sha3_256": "cb3c8a6ad7a1436396fa068530d1a373d4a72283802cde18895944c2fce16c90"
+    },
+    {
+      "path": "docs/archive/blueprints-vaultmesh-ai-import/MCP_WIRING.md",
+      "sha3_256": "92602bf201f0b82a12a8541873b235c13d333e636e0f609873dd7e8339800d0e"
+    },
+    {
+      "path": "docs/archive/blueprints-vaultmesh-ai-import/PILOT_RUNBOOK.md",
+      "sha3_256": "863f66b5e4ba4648cbb621d9845ed4f7fd261ab34d87b91f2c0e37683465c9c3"
+    },
+    {
+      "path": "docs/archive/blueprints-vaultmesh-ai-import/QUICKSTART.md",
+      "sha3_256": "6edd75818a4845348b7e6803f2dad702931e6edf5e330a6563be725e24c9a88d"
+    },
+    {
+      "path": "docs/archive/blueprints-vaultmesh-ai-import/README.md",
+      "sha3_256": "4f122850d48eb24063398a907c7e9d30cb5581fa1e846dd1cdd501e508be212c"
+    },
+    {
+      "path": "docs/archive/blueprints-vaultmesh-ai-import/SCHEMAS.md",
+      "sha3_256": "4037544a81326572fc609f30dd59af8a6491efb9981848f3ba84ee4df0cb347c"
+    },
+    {
+      "path": "docs/archive/blueprints-vaultmesh-ai-import/WORKBENCH.md",
+      "sha3_256": "029df7580eac5852d591fea3abf38c6ce2fcd4d49b980efab766e9a143a34298"
+    },
+    {
+      "path": "docs/archive/blueprints-vaultmesh-ai-import/tprm.v1.yaml",
+      "sha3_256": "26868a4611ea488b24636641ee946c80c4e543d993b38c0f11d586c4ecf32692"
+    },
+    {
+      "path": "docs/blueprints/FINTECH_PRICING.md",
+      "sha3_256": "283e744c376fcad1c4852e3ea30683623fae0ff390ffa10fca746b6e0483d908"
+    },
+    {
+      "path": "docs/blueprints/INDEX.md",
+      "sha3_256": "144646a3754761c2c4397c90c36fdb1e0877f1835e4d8b2d4bd72b9d2fec7a8b"
+    },
+    {
+      "path": "docs/blueprints/PRIVACY.md",
+      "sha3_256": "b6954c4c248535d9b13f48c5b03ed9ebb684c02992831be7e5a6672f6425ed59"
+    },
+    {
+      "path": "docs/blueprints/SALES/DECK.marp.md",
+      "sha3_256": "9d127203a4185da155147dd4bb86aec2c374d4f2eb8aefdc682ae98225de7b0b"
+    },
+    {
+      "path": "docs/blueprints/SALES/DECK_OUTLINE.md",
+      "sha3_256": "5f62aa50ea6c81cb2b06073f0df5556da50990d8e46bb684ff15ad1a375a957c"
+    },
+    {
+      "path": "docs/blueprints/SALES/DEMO_SCRIPT.md",
+      "sha3_256": "c5bbeb0e1bda9e6bbbf1b1510177c973a976acee3232c68d3f68f436628ad24b"
+    },
+    {
+      "path": "docs/blueprints/SALES/FINTECH_PRICING.md",
+      "sha3_256": "e54fe5700f6334be244550710f37ead666dfddb86d937d50d90ede7bcf9d6d44"
+    },
+    {
+      "path": "docs/blueprints/SALES/ONE_PAGER.marp.md",
+      "sha3_256": "4167a3820de7e62a0418717be30986357b82d30364f6c7102965c2d7916baf96"
+    },
+    {
+      "path": "docs/blueprints/SALES/ONE_PAGER.md",
+      "sha3_256": "95d15e3fcf561f82063605922c6383eb5528a04f56f4dfee5feeeb2794e641ee"
+    },
+    {
+      "path": "docs/blueprints/SALES/index.html",
+      "sha3_256": "0650829ed095dc43840525e9e3218f5665f4f77b7703d6bf74f782ddc610a586"
+    },
+    {
+      "path": "docs/blueprints/SALES/index2.html",
+      "sha3_256": "0650829ed095dc43840525e9e3218f5665f4f77b7703d6bf74f782ddc610a586"
+    },
+    {
+      "path": "docs/blueprints/SALES/theme.css",
+      "sha3_256": "12506d9941e6b5ad00bc6a64d4bb85e546e7ccdb0eede34e9240168bc6f11a64"
+    },
+    {
+      "path": "docs/blueprints/SALES/tprm_report.sample.json",
+      "sha3_256": "e53510369bacd51b7cc81a97890ca1f18017a34cecc62e969a193ec1ab7c34d0"
+    },
+    {
+      "path": "docs/blueprints/SALES/tprm_report.sample2.json",
+      "sha3_256": "e53510369bacd51b7cc81a97890ca1f18017a34cecc62e969a193ec1ab7c34d0"
+    },
+    {
+      "path": "docs/blueprints/SUPPORT.md",
+      "sha3_256": "7eaa6e381de41c10e5d4b743ff201a64c497bb0341d05a804880823682333f11"
+    },
+    {
+      "path": "docs/blueprints/TOS.md",
+      "sha3_256": "bc3a552fbb7e291ca155ce2807929cf99dd1c9e6f4bb1bc92fdf6281507ba93d"
+    }
+  ],
+  "epoch": 1,
+  "ts_iso": "2025-10-25T14:21:58Z"
+}
