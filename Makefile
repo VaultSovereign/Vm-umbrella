@@ -148,3 +148,19 @@ ssh-config-ensure:
 	else \
 	  echo "Host $(HOST_ALIAS) already present in ~/.ssh/config"; \
 	fi
+
+# --- LawChain governance sealing ---
+PY?=python3
+SEAL_OUT?=UMBRELLA_SEAL.json
+GOV_DIRS?=docs/ blueprints/ policies/ codex/ LICENSE* SECURITY.md README.md
+
+.PHONY: seal seal-verify anchor
+
+seal:
+	$(PY) scripts/seal_corpus.py --out $(SEAL_OUT) $(GOV_DIRS)
+
+seal-verify:
+	$(PY) scripts/seal_corpus.py --verify $(SEAL_OUT) $(GOV_DIRS)
+
+anchor:
+	bash scripts/anchor_rfc3161.sh $(SEAL_OUT)

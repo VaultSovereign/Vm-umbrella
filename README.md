@@ -2,11 +2,18 @@
 
 **Current CI Baseline:** `v0.1.0` — Rubedo Phase
 
-# vm-umbrella — VaultMesh Master Umbrella
+# 🜔 vm-umbrella — VaultMesh Law & Governance
 
-This repo is a pure coordinator. It pins canonical leaf projects as submodules under a single workspace.
+This repository is the **constitutional brain** of VaultMesh:
+- Signs and seals releases (SHA3-256 + optional RFC-3161).
+- Hosts governance docs & codex pointers.
+- Coordinates multi-repo CI/CD policy.
 
-Why vm-? Neutral naming, clean convergence for multiple families without “old” labels or history rewrites.
+**Start here:** see [`START_HERE.md`](./START_HERE.md)
+
+## LawChain Outputs
+- `UMBRELLA_SEAL.json` — canonical hash + timestamp of governance corpus
+- GitHub Actions artifacts — CI proofs per commit/PR
 
 ## Repos (canonical leafs)
 - Mesh (Rust core) → vm-mesh
