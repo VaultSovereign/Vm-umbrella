@@ -1,0 +1,30 @@
+name: lawchain-seal
+on:
+  push:
+    paths: ["docs/**","blueprints/**","policies/**","codex/**","LICENSE*","SECURITY.md","README.md","scripts/**","Makefile"]
+  pull_request:
+    paths: ["docs/**","blueprints/**","policies/**","codex/**","LICENSE*","SECURITY.md","README.md","scripts/**","Makefile"]
+  workflow_dispatch: {}
+
+jobs:
+  seal:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Seal corpus
+        run: |
+          python3 scripts/seal_corpus.py --out UMBRELLA_SEAL.json docs/ blueprints/ policies/ codex/ LICENSE* SECURITY.md README.md
+          cat UMBRELLA_SEAL.json
+      - name: RFC-3161 timestamp (optional)
+        env:
+          TSA_URL: ${{ secrets.TSA_URL }}
+        run: |
+          bash scripts/anchor_rfc3161.sh UMBRELLA_SEAL.json || true
+      - name: Upload proofs
+        uses: actions/upload-artifact@v4
+        with:
+          name: umbrella-proofs
+          path: |
+            UMBRELLA_SEAL.json
+            seal.tsq
+            UMBRELLA_SEAL.tsr

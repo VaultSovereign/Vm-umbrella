@@ -1,26 +1,11 @@
-# node / pnpm
-node_modules/
-pnpm-lock.yaml
+# Seal artifacts (generated locally, committed explicitly)
+seal.bin
+seal.tsq
+UMBRELLA_SEAL.tsr
 
-# python
-.venv/
+# Python
 __pycache__/
+*.pyc
 
-# rust
-/target/
-
-# system
+# System
 .DS_Store
-.idea/
-.vscode/
-
-# logs / caches
-*.log
-.cache/
-logs/actions/*.zip
-
-# receipts/artifacts (attach to Releases if needed)
-*.zip
-*.tar
-*.tar.gz
-*.tgz

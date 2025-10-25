@@ -1,0 +1,25 @@
+{
+  "artifact": "vm-umbrella",
+  "algo": "SHA3-256",
+  "root_sha3_256": "fe6f26e2ae4c0d0c8cac17e5fc0e287326b64580bb4d952ae4d839a85359275f",
+  "entries": [
+    {
+      "path": "LICENSE.sovereign",
+      "sha3_256": "645d3578305afd6b1edc381bc3f8a23e6c2b2652a9d5be2ac7427a7043f5abb2"
+    },
+    {
+      "path": "README.md",
+      "sha3_256": "17345e242a3b1c53021c215330363010d94f08e6a0ffee0b9f906e37d44195c5"
+    },
+    {
+      "path": "SECURITY.md",
+      "sha3_256": "bd14b49ee86bb4ddd4977ce2894bd4c157aacf42b89e4e020999bbd279c0eb15"
+    },
+    {
+      "path": "START_HERE.md",
+      "sha3_256": "ac638ee92d1eef687fb23fb30cc2240f291cb324e4ccb4ce244baddf6a7dbb9d"
+    }
+  ],
+  "epoch": 1,
+  "ts_iso": "2025-10-25T18:35:37Z"
+}
