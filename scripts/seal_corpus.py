@@ -29,12 +29,12 @@ def seal(files):
 def main():
     ap=argparse.ArgumentParser()
     ap.add_argument("--out")
-    ap.add_argument("--verify", action="store_true", help="verify existing seal")
+    ap.add_argument("--verify", help="verify existing seal file (pass seal file path)")
     ap.add_argument("paths", nargs="+")
     args=ap.parse_args()
 
     if args.verify:
-        seal_file=Path(args.out)
+        seal_file=Path(args.verify)
         data=json.loads(seal_file.read_text())
         files=collect(args.paths)
         entries, root=seal(files)
